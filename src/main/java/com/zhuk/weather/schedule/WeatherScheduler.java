@@ -10,11 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableScheduling
 @RequiredArgsConstructor
-public class WeatheScheduler {
+public class WeatherScheduler {
     private final WeatherService weatherService;
     @Scheduled(cron = "${weather.update-schedule.cron}")
-    public void saveInDatabase() {
+    public void saveWeatherInDatabase() {
        WeatherDto weatherDto = weatherService.saveCurrentWeather();
-       System.out.println("SAVED " + weatherDto);
     }
 }
