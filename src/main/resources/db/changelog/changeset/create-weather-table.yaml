@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-weather
+      author: Paul
+      changes:
+        - createTable:
+            tableName: weather
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: temperature
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: humidity
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: pressure
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: wind
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: condition
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_time
+                  type: datetime
+                  constraints:
+                    nullable: false
