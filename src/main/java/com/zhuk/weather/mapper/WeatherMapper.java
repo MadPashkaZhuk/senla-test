@@ -32,6 +32,6 @@ public interface WeatherMapper {
 
     @Named("stringToLocalDateTime")
     default LocalDateTime mapStringToLocalDateTime(String localtime) {
-        return LocalDateTime.parse(localtime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        return LocalDateTime.parse(localtime, DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm"));
     }
 }

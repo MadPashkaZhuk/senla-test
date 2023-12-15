@@ -2,6 +2,7 @@ package com.zhuk.weather.advice;
 
 import com.zhuk.weather.dto.BaseExceptionDto;
 import com.zhuk.weather.exception.BaseWeatherException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,14 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class ApplicationExceptionHandler {
     @ExceptionHandler(BaseWeatherException.class)
-    public ResponseEntity<BaseExceptionDto> handleBaseWeatherApiException(BaseWeatherException ex) {
+    public ResponseEntity<BaseExceptionDto> handleBaseWeatherApiException(BaseWeatherException exception) {
         BaseExceptionDto baseWeatherApiExceptionDTO = BaseExceptionDto.builder()
-                .message(ex.getMessage())
-                .httpStatus(ex.getHttpStatus())
+                .message(exception.getMessage())
+                .httpStatus(exception.getHttpStatus())
                 .build();
-        return new ResponseEntity<>(baseWeatherApiExceptionDTO, ex.getHttpStatus());
+        log.info("BaseWeatherException: " + exception.getMessage());
+        return new ResponseEntity<>(baseWeatherApiExceptionDTO, exception.getHttpStatus());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -37,6 +40,7 @@ public class ApplicationExceptionHandler {
                 .message(exception.getMessage())
                 .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
+        log.info("BaseWeatherException: " + exception.getMessage());
         return new ResponseEntity<>(baseExceptionDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

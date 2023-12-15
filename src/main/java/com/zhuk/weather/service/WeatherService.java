@@ -39,7 +39,7 @@ public class WeatherService {
     }
 
     public AverageTempDto getAverageTempForPeriod(RangeForAverageTempDto rangeDto) {
-        if(rangeDto.getTo().isAfter(rangeDto.getFrom()) ||
+        if(rangeDto.getFrom().isAfter(rangeDto.getTo()) ||
                 rangeDto.getFrom().isAfter(LocalDate.now())) {
             throw new IncorrectDateRangeException(messageSourceWrapper
                     .getMessageCode(WeatherMessageEnum.INCORRECT_DATE_RANGE),
