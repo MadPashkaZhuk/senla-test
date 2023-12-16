@@ -5,6 +5,7 @@ import com.zhuk.weather.enums.WeatherMessageEnum;
 import com.zhuk.weather.exception.BaseWeatherException;
 import com.zhuk.weather.exception.weatherapi.*;
 import com.zhuk.weather.utils.MessageSourceWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +15,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
+@RequiredArgsConstructor
 public class WeatherApiClient {
     private final RestTemplate restTemplate;
     private final MessageSourceWrapper messageSource;
     private final WeatherApiProperties weatherApiProperties;
-
-    public WeatherApiClient(RestTemplate restTemplate,
-                            MessageSourceWrapper messageSource,
-                            WeatherApiProperties weatherApiProperties) {
-        this.restTemplate = restTemplate;
-        this.messageSource = messageSource;
-        this.weatherApiProperties = weatherApiProperties;
-    }
 
     public WeatherApiDTO getDtoFromWeatherApi() {
         ResponseEntity<WeatherApiDTO> responseEntity = getResponseFromWeatherApi();

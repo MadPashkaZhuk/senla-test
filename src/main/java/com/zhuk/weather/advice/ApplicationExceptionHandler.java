@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
@@ -26,12 +25,12 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(baseWeatherApiExceptionDTO, exception.getHttpStatus());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException exception) {
+    public ResponseEntity<Map<String, String>> handleInvalidArgument(MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();
         exception.getBindingResult().getFieldErrors().forEach(x -> errors.put(x.getField(), x.getDefaultMessage()));
-        return errors;
+        log.info("MethodArgumentNotValidException: " + errors);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Throwable.class)
@@ -40,7 +39,7 @@ public class ApplicationExceptionHandler {
                 .message(exception.getMessage())
                 .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
-        log.info("BaseWeatherException: " + exception.getMessage());
+        log.info("Unknown exception: " + exception.getMessage());
         return new ResponseEntity<>(baseExceptionDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
